@@ -1,5 +1,8 @@
 package kr.co.funnyjoy.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,9 +52,15 @@ public class MemberController {
 			model.addAttribute("url", "/index.jsp");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping(value="/member/login.do", method=RequestMethod.POST)
+	public void showLoginForm(HttpServletRequest request, @RequestParam("member-id") String memberId, @RequestParam("member-pw") String memberPw, Model model) {
+		Member member = new Member(memberId, memberPw);
 		
-		
-		
-		
+		Member mOne = service.selectCheckLogin(member);
+		if(mOne != null) {
+			HttpSession session = request.getSession();
+		}
 	}
 }
